@@ -1,0 +1,41 @@
+Installation Steps:
+Step 1:
+1.npx create refine-app@latest (project_name)
+
+2.What would you like to name your project?: · client
+3. Choose your backend service to connect: · data-provider-nestjs-query
+4. Do you want to use a UI Framework?: · antd
+5. Do you want to add example pages?: · no
+6. Do you need any Authentication logic?: · auth-provider-auth6
+
+Step 2:
+cd project_name
+npm run dev --- start project
+
+Step 3:
+Configure The devtool (by initializing Auth)
+
+Step 4: 
+Unnessary Code
+
+***********Notes***************
+
+Provider:
+Data Fetching 
+Authentication
+Routing
+Notification
+Real-time updates
+
+Data Provider:
+Use In CRUD
+
+Git Commands:
+
+git init
+git remote add origin <repository-URL>
+git add .
+git commit -m "Your commit message"
+git push -u origin <branch-name>
+git push
+

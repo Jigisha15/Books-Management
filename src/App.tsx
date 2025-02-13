@@ -1,8 +1,5 @@
 import {
-  AuthBindings,
-  GitHubBanner,
   Refine,
-  WelcomePage,
 } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
@@ -10,88 +7,23 @@ import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import { useAuth0 } from "@auth0/auth0-react";
+
 import {dataProvider} from "./providers";
 import routerBindings, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
-import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 //Pages Import
-// import {AllBooks}  from './pages'
+import {AllBooks , IssuedBooks, Header, Modal , Navbar}  from './pages'
 
 
 function App() {
-  const { isLoading, user, logout, getIdTokenClaims } = useAuth0();
-
-  if (isLoading) {
-    return <span>loading...</span>;
-  }
-
-  const authProvider: AuthBindings = {
-    login: async () => {
-      return {
-        success: true,
-      };
-    },
-    logout: async () => {
-      logout({ returnTo: window.location.origin });
-      return {
-        success: true,
-      };
-    },
-    onError: async (error) => {
-      console.error(error);
-      return { error };
-    },
-    check: async () => {
-      try {
-        const token = await getIdTokenClaims();
-        if (token) {
-          axios.defaults.headers.common = {
-            Authorization: `Bearer ${token.__raw}`,
-          };
-          return {
-            authenticated: true,
-          };
-        } else {
-          return {
-            authenticated: false,
-            error: {
-              message: "Check failed",
-              name: "Token not found",
-            },
-            redirectTo: "/login",
-            logout: true,
-          };
-        }
-      } catch (error: any) {
-        return {
-          authenticated: false,
-          error: new Error(error),
-          redirectTo: "/login",
-          logout: true,
-        };
-      }
-    },
-    getPermissions: async () => null,
-    getIdentity: async () => {
-      if (user) {
-        return {
-          ...user,
-          avatar: user.picture,
-        };
-      }
-      return null;
-    },
-  };
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
           <AntdApp>
             <DevtoolsProvider>
@@ -100,7 +32,7 @@ function App() {
                 // liveProvider={liveProvider(wsClient)}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
-                authProvider={authProvider}
+                // authProvider={authProvider}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
@@ -110,8 +42,12 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route index element={<WelcomePage />} />
-                  {/* <Route index element={<AllBooks/>}/> */}
+                  {/*  */}
+                  <Route path="/header" element={<Header/>}/>
+                  <Route path="/allbooks" element={<AllBooks/>}/>
+                  <Route path="/issuedbooks" element={<IssuedBooks/>}/>
+                  <Route path="/modal" element={<Modal/>}/>
+                  <Route path="/navbar" element={<Navbar/>}/>
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />

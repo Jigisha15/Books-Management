@@ -1,1 +1,5 @@
 export * from './AllBooks'
+export * from './IssuedBooks'
+export * from './Header'
+export * from './Modal'
+export * from './Navbar'

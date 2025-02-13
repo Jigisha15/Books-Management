@@ -1,7 +1,8 @@
-const AllBooks = () => {
+import List from "./list"
+export const AllBooks = () => {
   return (
-    <div>AllBooks</div>
+    <>
+    <List/>
+    </>
   )
 }
-
-export default AllBooks;

@@ -15,4 +15,3 @@ export const client = new GraphQLClient(API_URL,{
 })
 
 export const dataProvider = graphqlDataProvider(client);
-// export const liveProvider = graphqlLiveProvider(wsClient);

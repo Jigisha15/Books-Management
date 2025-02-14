@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import styled from "styled-components";
+import { useCreate } from "@refinedev/core";
 
 interface Values {
     book_id: number,
@@ -36,10 +37,20 @@ const Update = () => {
     setOpen(false);
   };
 
+  // const AddBook = () => {
+  //   const { mutate } = useCreate();
+  
+  //   const onFinish = (values: any) => {
+  //     mutate({
+  //       resource: "Name", 
+  //       values,
+  //     });
+  //   };
+
   return (
     <>
       <Button type="primary" onClick={() => setOpen(true)}>
-        Add
+        Add Book
       </Button>
 
       <StyledModal

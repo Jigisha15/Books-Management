@@ -1,5 +1,7 @@
-import { Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
+import React, { useState } from "react";
+import { Table, Button, Space } from "antd";
+import type { TableProps } from "antd";
+import { Home } from "../Home";
 
 interface DataType {
   id: string;
@@ -152,15 +154,47 @@ const data: DataType[] = [
   
 ];
 const list = () => {
+  const pageSize = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+  
+    const startIndex = (currentPage - 1) * pageSize;
+    const paginatedData = data.slice(startIndex, startIndex + pageSize);
+  
+    const nextPage = () => {
+      if (currentPage < Math.ceil(data.length / pageSize)) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+  
+    const prevPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
   return (
     <>
-    <Table<DataType> 
-    columns={columns} 
-    dataSource={data}
-    />;
-    </>
+          <Home />
+          <Table<DataType>
+            columns={columns}
+            dataSource={paginatedData}
+            rowKey="id"
+            pagination={false}
+          />    
+          <Space style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
+            <Button onClick={prevPage} disabled={currentPage === 1}>
+              Previous
+            </Button>
+            <span>
+              Page {currentPage} of {Math.ceil(data.length / pageSize)}
+            </span>
+            <Button onClick={nextPage} disabled={currentPage === Math.ceil(data.length / pageSize)}>
+              Next
+            </Button>
+          </Space>
+        </>
 
   )
 }
 
 export default list
+

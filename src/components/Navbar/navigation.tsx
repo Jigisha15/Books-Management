@@ -3,30 +3,55 @@ import { Button } from "antd";
 import styled from "styled-components";
 
 const NavContainer = styled.div`
-      display: flex;
-    justify-content: center;
-    gap: 12px;
-    padding: 12px;
-    background: #fff;
-    border-radius: 8px;
-    width: 30%;
-    border: 1px solid black;
-    margin:20px
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  background: #fff;
+  border-radius: 8px;
+  max-width: 30%;
+  border: 1px solid #e4e4e4;
+  margin: 20px;
+  margin-left: 0;
+
+  @media (max-width: 768px) {
+    max-width: 80%;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 95%;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+  }
 `;
 
 const PillButton = styled(Button)<{ active?: boolean }>`
-  border-radius: 20px;
-  padding: 8px 16px;
+  border-radius: 5px;
+  padding: 20px 20px;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
 
   ${({ active }) =>
     active
-      ? "background: #a3a4ae; color: white; border: 1px solid black;"
+      ? "background: #e4e4e4; color: #000000; border: 1px solid #a3a4ae;"
       : "background: white; color: black; border: none;"}
-      &:hover {
-    background: #a3a4ae !important;
-    color: white !important;
+
+  &:hover {
+    background: #e4e4e4 !important;
+    color: #000000 !important;
+    border: 1px solid #a3a4ae !important
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px 10px;
+    font-size: 12px;
   }
 `;
 

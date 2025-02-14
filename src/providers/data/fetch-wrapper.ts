@@ -13,7 +13,6 @@ const customFetch = async (url: string, options: RequestInit) => {
         headers: {
             ...headers,
             "Content-Type": "application/json",
-            "Apollo-Require-Preflight": "true",
         }
     });
 };
@@ -21,35 +20,11 @@ const customFetch = async (url: string, options: RequestInit) => {
 export const fetchWrapper = async (url: string, options: RequestInit) => {
     const response = await customFetch(url, options);
   
-    const responseClone = response.clone();
-    const body = await responseClone.json();
-    const error = getGraphQLErrors(body);
+    const body = await response.json();
   
-    if (error) {
-      throw error;
+    if (body.errors) {
+        throw new Error(body.errors.map((err: GraphQLFormattedError) => err.message).join(", "));
     }
   
-    return response;
-};
-
-const getGraphQLErrors = (body: Record<"errors", GraphQLFormattedError[] | undefined>) :
-    Error | null => {
-    if (!body) {
-        return {
-            message: 'Unknown error',
-            statusCode: "INTERNAL_SERVER_ERROR"
-        };
-    }
-    if ("errors" in body) {
-        const errors = body?.errors;
-
-        const message = errors?.map((error) => error?.message)?.join(" ");
-        const code = errors?.[0]?.extensions?.code;
-
-        return {
-            message: message || JSON.stringify(errors),
-            statusCode: code || "500"
-        };
-    }
-    return null;
+    return body;
 };

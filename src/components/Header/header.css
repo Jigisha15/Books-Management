@@ -1,0 +1,60 @@
+.head-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    position: relative;
+    gap: 20px;
+ }
+ 
+ @media (min-width: 768px) {
+    .head-container {
+        grid-template-columns: 50% 50%;
+    }
+ }
+ 
+ .head-content {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+ }
+ 
+ .User-name span, .head-breadcrum span:first-child {
+     color: #9b8f8f;
+ }
+ 
+ .head-info {
+     display: flex;
+     justify-content: space-evenly;
+     width: 100%;
+     position: relative;
+     top: auto;
+     right: auto;
+     grid-template-columns: 1fr;
+     justify-items: center;
+ }
+ 
+ @media (min-width: 768px) {
+    .head-info {
+        width: 30%;
+        position: absolute;
+        right: 0;
+        top: 30%;
+        grid-template-columns: 50% 50%;
+        justify-items: end;
+    }
+ }
+ 
+ .brand-details {
+     display: flex;
+     justify-content: center;
+     border: 1px solid #e4e4e4;
+     width: 30%;
+     border-radius: 5px;
+     height: 30px;
+     padding: 5px;
+ }
+ 
+ @media (min-width: 768px) {
+    .brand-details {
+        width: 40%;
+    }
+ }

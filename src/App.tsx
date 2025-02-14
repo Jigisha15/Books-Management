@@ -1,3 +1,4 @@
+import './App.css'
 import {
   Refine,
 } from "@refinedev/core";
@@ -17,7 +18,7 @@ import { App as AntdApp } from "antd";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 //Pages Import
-import {AllBooks , IssuedBooks, Header, Modal , Navbar}  from './pages'
+import {AllBooks , IssuedBooks, Home}  from './pages'
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
     <BrowserRouter>
       <RefineKbarProvider>
           <AntdApp>
-            <DevtoolsProvider>
+            {/* <DevtoolsProvider> */}
               <Refine
                 dataProvider={dataProvider}
                 // liveProvider={liveProvider(wsClient)}
@@ -43,18 +44,16 @@ function App() {
               >
                 <Routes>
                   {/*  */}
-                  <Route path="/header" element={<Header/>}/>
+                  <Route path="/" element={<Home/>}/>
                   <Route path="/allbooks" element={<AllBooks/>}/>
                   <Route path="/issuedbooks" element={<IssuedBooks/>}/>
-                  <Route path="/modal" element={<Modal/>}/>
-                  <Route path="/navbar" element={<Navbar/>}/>
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
               </Refine>
-              <DevtoolsPanel />
-            </DevtoolsProvider>
+              {/* <DevtoolsPanel /> */}
+            {/* </DevtoolsProvider> */}
           </AntdApp>
       </RefineKbarProvider>
     </BrowserRouter>

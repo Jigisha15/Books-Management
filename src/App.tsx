@@ -27,7 +27,7 @@ function App() {
     <BrowserRouter>
       <RefineKbarProvider>
           <AntdApp>
-            {/* <DevtoolsProvider> */}
+            <DevtoolsProvider>
               <Refine
                 dataProvider={dataProvider}
                 // liveProvider={liveProvider(wsClient)}
@@ -52,8 +52,8 @@ function App() {
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
               </Refine>
-              {/* <DevtoolsPanel /> */}
-            {/* </DevtoolsProvider> */}
+              <DevtoolsPanel />
+            </DevtoolsProvider>
           </AntdApp>
       </RefineKbarProvider>
     </BrowserRouter>

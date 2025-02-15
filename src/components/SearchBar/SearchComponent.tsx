@@ -1,3 +1,4 @@
+import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Table, Button, Space, Input } from "antd";
 
 const { Search } = Input;
@@ -13,9 +14,10 @@ const SearchComponent = () => {
           enterButton="Filter"
           style={{ width: 300 }}
           disabled
+          prefix={<SearchOutlined />}
         />
       </Space>
-      <Button disabled>Issues Books</Button>
+      <Button disabled icon={<EyeOutlined />}>Issues Books</Button>
     </div>
   )
 }

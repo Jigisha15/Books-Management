@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Flex, Form, Input, Modal } from "antd";
 import styled from "styled-components";
 import { useCreate } from "@refinedev/core";
+import dayjs from "dayjs";
+
 
 interface Values {
-    book_id: number,
     book_name: string,
     book_author: string,
+    book_edition: string,
     book_publisher: string,
-    book_publish_year: Date,
-    book_borrowed: boolean;
-    date_of_borrowing: Date;
+    book_borrowed:boolean,
+    book_publish_year: string,
+    date_of_borrowing: string;
+    department: string
 }
 
 const GridContainer = styled.div`
@@ -30,22 +33,26 @@ const Update = () => {
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState<Values>();
   const [open, setOpen] = useState(false);
+  const { mutate } = useCreate();
 
-  const onCreate = (values: Values) => {
-    console.log("Received values of form: ", values);
-    setFormValues(values);
+
+    const onFinish = (values: any) => {
+      const currentDate = dayjs().format("YYYY-MM-DD");
+
+      const updatedValues = {
+        ...values,
+        date_of_borrowing:currentDate,
+        book_borrowed:true,
+      }
+      console.log("Sending Data:", updatedValues); 
+      mutate({
+        resource: "add-book",
+        values: updatedValues
+     });
+     console.log(updatedValues)
+    setFormValues(updatedValues);
     setOpen(false);
-  };
-
-  // const AddBook = () => {
-  //   const { mutate } = useCreate();
-  
-  //   const onFinish = (values: any) => {
-  //     mutate({
-  //       resource: "Name", 
-  //       values,
-  //     });
-  //   };
+    };
 
   return (
     <>
@@ -62,9 +69,11 @@ const Update = () => {
         destroyOnClose
         footer={[
         
-          <Button key="submit" type="primary" onClick={() => form.submit()}>
+          <Flex vertical justify="center" align="center">
+            <Button key="submit" type="primary" onClick={() => form.submit()} style={{width:"10%"}}>
             Add Book
           </Button>,
+          </Flex>
         ]}
         width={{xxl:'90%'}}
       >
@@ -72,19 +81,11 @@ const Update = () => {
           form={form}
           layout="vertical"
           name="book_form"
-          onFinish={onCreate}
+          onFinish={onFinish}
         >
           <GridContainer>
             <Form.Item
-              name="bookId"
-              label="Book ID"
-              rules={[{ required: true, message: "Enter Book ID" }]}
-            >
-              <Input placeholder="Enter Book ID" />
-            </Form.Item>
-
-            <Form.Item
-              name="bookName"
+              name="book_name"
               label="Name of the book"
               rules={[{ required: true, message: "Enter Name of the book" }]}
             >
@@ -92,7 +93,7 @@ const Update = () => {
             </Form.Item>
 
             <Form.Item
-              name="authorName"
+              name="book_author"
               label="Name of Author"
               rules={[{ required: true, message: "Enter Name of Author" }]}
             >
@@ -100,7 +101,7 @@ const Update = () => {
             </Form.Item>
 
             <Form.Item
-              name="bookEdition"
+              name="book_edition"
               label="Book Edition"
               rules={[{ required: true, message: "Enter Book Edition" }]}
             >
@@ -108,7 +109,7 @@ const Update = () => {
             </Form.Item>
 
             <Form.Item
-              name="publisherName"
+              name="book_publisher"
               label="Name of Publisher"
               rules={[{ required: true, message: "Enter Name of Publisher" }]}
             >
@@ -116,11 +117,19 @@ const Update = () => {
             </Form.Item>
 
             <Form.Item
-              name="publicationYear"
+              name="book_publish_year"
               label="Publication Year"
               rules={[{ required: true, message: "Enter Publication Year" }]}
             >
               <Input placeholder="Enter Year" />
+            </Form.Item>
+
+            <Form.Item
+              name="department"
+              label="Deparment"
+              rules={[{ required: true, message: "Enter Book Department" }]}
+            >
+              <Input placeholder="Enter Book Department" />
             </Form.Item>
           </GridContainer>
         </Form>

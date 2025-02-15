@@ -2,166 +2,53 @@ import React, { useState } from "react";
 import { Table, Button, Space } from "antd";
 import type { TableProps } from "antd";
 import { Home } from "../Home";
+import { useList } from "@refinedev/core";
+import { IssuedBooks } from "../../types/books"
 
-interface DataType {
-  id: string;
-  name: string;
-  department: string;
-  book_borrowed: string;
-  date_of_borrowing: string;
-}
-
-
-const columns: TableProps<DataType>['columns'] = [
+const columns: TableProps<IssuedBooks>['columns'] = [
   {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
+    title: "ID",
+    dataIndex: "book_id",
+    key: "book_id",
   },
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: "Name",
+    dataIndex: "book_name",
+    key: "book_name",
   },
   {
-    title: 'Department',
-    dataIndex: 'department',
-    key: 'department',
+    title: "Department",
+    dataIndex: "department",
+    key: "department",
   },
   {
-    title: 'Book Borrowed',
-    key: 'book_borrowed',
-    dataIndex: 'book_borrowed',
+    title: "Book Borrowed",
+    dataIndex: "book_author",
+    key: "book_borrowed",
   },
   {
-    title: 'Data of borrowing',
-    dataIndex:'date_of_borrowing',
-    key: 'action',
+    title: "Date of Borrowing",
+    dataIndex: "date_of_borrowing",
+    key: "date_of_borrowing",
   },
 ];
 
-const data: DataType[] = [
-  {
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },
-  {
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },{
-    id: '1',
-    name: 'Bhumi Jain',
-    department: 'Electronics',
-    book_borrowed: 'Phoenix Baker',
-    date_of_borrowing: '25-01-25',
-  },
-  
-];
 const list = () => {
+ const { data } = useList<IssuedBooks>({
+    resource: "view-books",
+  });
+
+  const IssuedBooks = data?.data || [];
+
+
   const pageSize = 5;
     const [currentPage, setCurrentPage] = useState(1);
   
     const startIndex = (currentPage - 1) * pageSize;
-    const paginatedData = data.slice(startIndex, startIndex + pageSize);
+    const paginatedData = IssuedBooks.slice(startIndex, startIndex + pageSize);
   
     const nextPage = () => {
-      if (currentPage < Math.ceil(data.length / pageSize)) {
+      if (currentPage < Math.ceil(IssuedBooks.length / pageSize)) {
         setCurrentPage(currentPage + 1);
       }
     };
@@ -174,7 +61,7 @@ const list = () => {
   return (
     <>
           <Home />
-          <Table<DataType>
+          <Table<IssuedBooks>
             columns={columns}
             dataSource={paginatedData}
             rowKey="id"
@@ -185,9 +72,9 @@ const list = () => {
               Previous
             </Button>
             <span>
-              Page {currentPage} of {Math.ceil(data.length / pageSize)}
+              Page {currentPage} of {Math.ceil(IssuedBooks.length / pageSize)}
             </span>
-            <Button onClick={nextPage} disabled={currentPage === Math.ceil(data.length / pageSize)}>
+            <Button onClick={nextPage} disabled={currentPage === Math.ceil(IssuedBooks.length / pageSize)}>
               Next
             </Button>
           </Space>

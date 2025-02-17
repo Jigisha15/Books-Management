@@ -1,41 +1,7 @@
-// import { GraphQLFormattedError } from "graphql";
-
-// const customFetch = async (url: string, options: RequestInit) => {
-//     const headers = options.headers as Record<string, string>;
-
-//     return fetch(url, {
-//         ...options,
-//         headers: {
-//             ...headers,
-//             "Content-Type": "application/json",
-//         },
-//     });
-// };
-
-// export const fetchWrapper = async (url: string, options: RequestInit) => {
-//     try {
-//         const response = await customFetch(url, options);
-
-//         if (!response.ok) {
-//             throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
-//         }
-
-//         const body = await response.json();
-
-//         if (body.errors) {
-//             throw new Error(
-//                 body.errors.map((err: GraphQLFormattedError) => err.message).join(", ")
-//             );
-//         }
-
-//         return body;
-//     } catch (error) {
-//         console.error("Fetch error:", error);
-//         throw new Error("An error occurred while fetching data.");
-//     }
-// };
-
-
+type ErrorResponse = {
+    errors?: { message: string }[];
+    error?: string;
+};
 const customFetch = async (url: string, options: RequestInit) => {
     const headers = options.headers as Record<string, string>;
 
@@ -53,27 +19,20 @@ export const fetchWrapper = async (url: string, options: RequestInit) => {
         const response = await customFetch(url, options);
 
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+            const errorData = await response.json() as ErrorResponse;
+            throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
         }
 
-        const body = await response.json();
-
-    
-        if (Array.isArray(body)) {
-            return { data: body, total: body.length };
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            return data;
         }
 
-        
-        if (body.errors) {
-            throw new Error(
-                body.errors.map((err: any) => err.message).join(", ")
-            );
-        }
-
-        return body;
+        return response;
     } catch (error) {
         console.error("Fetch Error:", error);
-        throw new Error("An error occurred while fetching data.");
+        throw error;
     }
 };
 

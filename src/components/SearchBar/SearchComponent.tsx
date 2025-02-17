@@ -1,5 +1,5 @@
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Table, Button, Space, Input } from "antd";
+import { Button, Space, Input } from "antd";
 
 const { Search } = Input;
 

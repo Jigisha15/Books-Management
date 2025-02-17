@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 
 const MyDatePicker = () => {
-    const [date, setDate] = useState(dayjs()); // Default to current date
+    const [date, setDate] = useState(dayjs());
 
     return (
         <DatePicker 

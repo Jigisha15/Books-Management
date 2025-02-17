@@ -41,7 +41,7 @@ const list = () => {
   const IssuedBooks = data?.data || [];
 
 
-  const pageSize = 5;
+  const pageSize = 10;
     const [currentPage, setCurrentPage] = useState(1);
   
     const startIndex = (currentPage - 1) * pageSize;
@@ -64,7 +64,7 @@ const list = () => {
           <Table<IssuedBooks>
             columns={columns}
             dataSource={paginatedData}
-            rowKey="id"
+            rowKey="book_id"
             pagination={false}
           />    
           <Space style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>

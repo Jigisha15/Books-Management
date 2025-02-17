@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Table, Button, Space} from "antd";
 import type { TableProps } from "antd";
 import { Home } from "../Home";
@@ -40,7 +40,7 @@ const List = () => {
 
 
   const books = data?.data || [];
-  const pageSize = 5;
+  const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * pageSize;

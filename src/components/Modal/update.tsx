@@ -1,20 +1,10 @@
 import { useState } from "react";
 import { Button, Flex, Form, Input, Modal } from "antd";
 import styled from "styled-components";
-import { useCreate } from "@refinedev/core";
+import { useCreate, useInvalidate } from "@refinedev/core";
 import dayjs from "dayjs";
+import { Values } from "../../types/books"
 
-
-interface Values {
-    book_name: string,
-    book_author: string,
-    book_edition: string,
-    book_publisher: string,
-    book_borrowed:boolean,
-    book_publish_year: string,
-    date_of_borrowing: string;
-    department: string
-}
 
 const GridContainer = styled.div`
   display: grid;
@@ -33,26 +23,41 @@ const Update = () => {
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState<Values>();
   const [open, setOpen] = useState(false);
-  const { mutate } = useCreate();
+  const { mutate, isLoading } = useCreate();
+  const invalidate = useInvalidate();
 
 
-    const onFinish = (values: any) => {
-      const currentDate = dayjs().format("YYYY-MM-DD");
+  const onFinish = (values: any) => {
+    console.log("start")
 
-      const updatedValues = {
-        ...values,
-        date_of_borrowing:currentDate,
-        book_borrowed:true,
+
+    const currentDate = dayjs().format("YYYY-MM-DD");
+
+    const updatedValues = {
+      ...values,
+      date_of_borrowing: currentDate,
+      book_borrowed: true,
+    }
+    console.log(values)
+    console.log("Sending Data:", updatedValues);
+    mutate(
+      { resource: "add-book", values: updatedValues },
+      {
+        onSuccess: () => {
+          setOpen(false);
+          invalidate({
+                          resource: "view-books",
+                          invalidates: ["list"],
+                        });
+        }
       }
-      console.log("Sending Data:", updatedValues); 
-      mutate({
-        resource: "add-book",
-        values: updatedValues
-     });
-     console.log(updatedValues)
+    );
+    console.log(updatedValues);
+    console.log("Sending Data:", JSON.stringify(updatedValues, null, 2));
     setFormValues(updatedValues);
     setOpen(false);
-    };
+    console.log("end")
+  };
 
   return (
     <>
@@ -68,14 +73,13 @@ const Update = () => {
         onCancel={() => setOpen(false)}
         destroyOnClose
         footer={[
-        
           <Flex vertical justify="center" align="center">
-            <Button key="submit" type="primary" onClick={() => form.submit()} style={{width:"10%"}}>
-            Add Book
-          </Button>,
+            <Button key="submit" type="primary" onClick={() => form.submit()} style={{ width: "10%" }}>
+              Add Book
+            </Button>
           </Flex>
         ]}
-        width={{xxl:'90%'}}
+        width={{ xxl: '90%' }}
       >
         <Form
           form={form}
@@ -132,6 +136,7 @@ const Update = () => {
               <Input placeholder="Enter Book Department" />
             </Form.Item>
           </GridContainer>
+
         </Form>
       </StyledModal>
     </>

@@ -9,17 +9,8 @@
 table{
   border: 1px solid  #e4e4e4;
 }
-
-
-/* Search Component styling */
-.ant-space{
-  display: block;
-}
-.searchbar-container{
-  display: grid;
-  grid-template-columns: 90% 10%;
-  gap: 10px;
-}
-.ant-input-group-wrapper{
-  width: 100%  !important
+.ant-btn-variant-solid {
+  background: #1E40AF; 
+  color: #ffffff;
+  text-decoration: none;
 }

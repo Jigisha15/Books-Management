@@ -1,0 +1,25 @@
+.TableSpace {
+    display: flex;
+}
+
+.TableBtn {
+    color: #7e7979;
+    background-color: #fff;
+    border: none;
+}
+.TableBtn:hover{
+    text-decoration: none;
+}
+.Table_Book{
+    border: 1px solid #E9EAEB;
+    border-radius: 10px;
+}
+
+.table-title-container{
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+.search-Items{
+    display: flex;
+    justify-content: space-around;
+}

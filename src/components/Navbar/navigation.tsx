@@ -35,12 +35,12 @@ const PillButton = styled(Button)<{ active?: boolean }>`
 
   ${({ active }) =>
     active
-      ? "background: #e4e4e4; color: #000000; border: 1px solid #a3a4ae;"
+      ? "background: #1E40AF; color: #ffffff; border: 1px solid #a3a4ae;"
       : "background: white; color: black; border: none;"}
 
   &:hover {
-    background: #e4e4e4 !important;
-    color: #000000 !important;
+    background: #1E40AF !important;
+    color: #ffffff !important;
     border: 1px solid #a3a4ae !important
   }
 

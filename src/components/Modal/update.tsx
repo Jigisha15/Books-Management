@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { useCreate, useInvalidate } from "@refinedev/core";
 import dayjs from "dayjs";
 import { Values } from "../../types/books"
+import { PlusCircleOutlined } from "@ant-design/icons";
 
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   padding: 10px;
 `;
@@ -62,6 +63,7 @@ const Update = () => {
   return (
     <>
       <Button type="primary" onClick={() => setOpen(true)}>
+      <PlusCircleOutlined />
         Add Book
       </Button>
 
@@ -79,7 +81,7 @@ const Update = () => {
             </Button>
           </Flex>
         ]}
-        width={{ xxl: '90%' }}
+        width={{ xl: '60%' }}
       >
         <Form
           form={form}

@@ -1,5 +1,6 @@
 import './header.css'
 import Date from '../MyDatePicker/date'
+import Logo from '../../../public/images/Ellipse 4.png'
 
 const HeadContent = () => {
   
@@ -12,24 +13,16 @@ const HeadContent = () => {
         <div className="User-name">
           <span><h3>Username</h3></span>
         </div>
-        <div className="head-breadcrum">
-          <p><span>Page name </span>&gt;<span> Page name</span></p>
-        </div>
       </div>
       <div className="head-info">
-        <div className="head-date">
-          <div className="date">
-          <Date/>
-          </div>
-        </div>
         <div className="brand-details">
           <div className="brand-logo">
               <div className="img">
-            <p>TIA</p>
+                <img src={Logo} alt="brand-logo" />
               </div>
           </div> &nbsp;|&nbsp;
           <div className="brand-name">
-            <p>TIA</p>
+            <p style={{color:"#1E40AF"}}>TIA</p>
           </div>
         </div>
       </div>

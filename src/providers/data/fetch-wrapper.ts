@@ -4,8 +4,10 @@ type ErrorResponse = {
 };
 const customFetch = async (url: string, options: RequestInit) => {
     const headers = options.headers as Record<string, string>;
+    
+    const fullUrl = url.startsWith('http') ? url : `http://localhost:3000/books${url.startsWith('/') ? url : `/${url}`}`;
 
-    return fetch(url, {
+    return fetch(fullUrl, {
         ...options,
         headers: {
             ...headers,

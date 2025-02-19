@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Table, Button, Space } from "antd";
 import type { TableProps } from "antd";
-import { Home } from "../Home";
 import { useList } from "@refinedev/core";
 import { IssuedBooks } from "../../types/books"
+import SearchIssuedBook from './searchIssuedBook'
 
 const columns: TableProps<IssuedBooks>['columns'] = [
   {
@@ -34,7 +34,7 @@ const columns: TableProps<IssuedBooks>['columns'] = [
 ];
 
 const list = () => {
- const { data } = useList<IssuedBooks>({
+  const { data } = useList<IssuedBooks>({
     resource: "view-books",
   });
 
@@ -42,43 +42,55 @@ const list = () => {
 
 
   const pageSize = 10;
-    const [currentPage, setCurrentPage] = useState(1);
-  
-    const startIndex = (currentPage - 1) * pageSize;
-    const paginatedData = IssuedBooks.slice(startIndex, startIndex + pageSize);
-  
-    const nextPage = () => {
-      if (currentPage < Math.ceil(IssuedBooks.length / pageSize)) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-  
-    const prevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-    };
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedData = IssuedBooks.slice(startIndex, startIndex + pageSize);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(IssuedBooks.length / pageSize)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   return (
     <>
-          <Home />
-          <Table<IssuedBooks>
-            columns={columns}
-            dataSource={paginatedData}
-            rowKey="book_id"
-            pagination={false}
-          />    
-          <Space style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
-            <Button onClick={prevPage} disabled={currentPage === 1}>
-              Previous
-            </Button>
-            <span>
-              Page {currentPage} of {Math.ceil(IssuedBooks.length / pageSize)}
-            </span>
-            <Button onClick={nextPage} disabled={currentPage === Math.ceil(IssuedBooks.length / pageSize)}>
-              Next
-            </Button>
-          </Space>
-        </>
+      <Table<IssuedBooks>
+        columns={columns}
+        dataSource={paginatedData}
+        rowKey="book_id"
+        pagination={false}
+        className="Table_Book"
+
+        title={() => (
+          <>
+            <SearchIssuedBook />
+
+          </>
+        )}
+        footer={() => (
+          <>
+            <Space style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
+              <Button type="primary" onClick={prevPage} disabled={currentPage === 1}>
+                Previous
+              </Button>
+              <span>
+                Page {currentPage} of {Math.ceil(IssuedBooks.length / pageSize)}
+              </span>
+              <Button type="primary" onClick={nextPage} disabled={currentPage === Math.ceil(IssuedBooks.length / pageSize)}>
+                Next
+              </Button>
+            </Space>
+          </>
+        )}
+      />
+
+    </>
 
   )
 }

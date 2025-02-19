@@ -34,23 +34,25 @@ function App() {
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 // authProvider={authProvider}
-                options={{
-                  syncWithLocation: true,
-                  warnWhenUnsavedChanges: true,
-                  useNewQueryKeys: true,
-                  projectId: "lSo8Sj-4q4ebO-E8c1yt",
-                  liveMode: "auto",
-                }}
+                // options={{
+                //   syncWithLocation: true,
+                //   warnWhenUnsavedChanges: true,
+                //   useNewQueryKeys: true,
+                //   projectId: "lSo8Sj-4q4ebO-E8c1yt",
+                //   liveMode: "auto",
+                // }}
               >
                 <Routes>
                   {/*  */}
-                  <Route path="/" element={<Home/>}/>
-                  <Route path="/allbooks" element={<AllBooks/>}/>
-                  <Route path="/issuedbooks" element={<IssuedBooks/>}/>
+                  <Route path="/" element={<Home/>}>
+                    <Route path="/allbooks" element={<AllBooks/>}/>
+                    <Route path="/issuedbooks" element={<IssuedBooks/>}/>
+                  </Route>
+                  
                 </Routes>
                 <RefineKbar />
-                <UnsavedChangesNotifier />
-                <DocumentTitleHandler />
+                {/* <UnsavedChangesNotifier />
+                <DocumentTitleHandler /> */}
               </Refine>
               <DevtoolsPanel />
             </DevtoolsProvider>

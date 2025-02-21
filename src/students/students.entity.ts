@@ -1,5 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, Check } from 'typeorm';
 
+export enum UserRole {
+  ADMIN = "admin",
+  ELECTRONIC = "electronic",
+  FINANCE = "finance",
+}
+
 @Entity('students_table')
 @Check(`"email" ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$'`)
 export class Students {
@@ -29,6 +35,18 @@ export class Students {
   })
   phoneNo: number;
 
-  @Column({ name: 'address', type: 'text', nullable: false })
+  @Column({ 
+    name: 'address',
+    type: 'text',
+    nullable: false 
+  })
   address: string;
+  
+  @Column({ 
+    name: 'department', 
+    enum: UserRole,
+    default: UserRole.ELECTRONIC,
+    nullable: false 
+  })
+  role: UserRole
 }

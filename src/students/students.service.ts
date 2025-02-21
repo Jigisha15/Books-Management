@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Body, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Students } from './students.entity';
 import { StudentQueryDTO } from './dto/student.query-dto';
 import { isUUID } from 'class-validator';
+import { promise } from 'zod';
 
 @Injectable()
 export class StudentsService {
@@ -43,4 +44,8 @@ export class StudentsService {
       );
     }
   }
+  createStudent(studentCreated:Partial<Students>) {
+    const newstudent= this.studentsRepository.create(studentCreated)
+    return this.studentsRepository.save(newstudent)
+  }  
 }

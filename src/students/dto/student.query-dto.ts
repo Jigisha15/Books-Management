@@ -3,3 +3,4 @@ export const StudentQueryDTO = {
   email: '',
   phone_no: '',
 };
+

@@ -1,3 +1,4 @@
+
 import {
   Controller,
   Body,
@@ -32,7 +33,8 @@ export class StudentsController {
 
   @Post('create')
   createStudent(@Body() studentPayload: any, @Req() request: Request) {
-    return `${request.method} from ${request.ip} data : ${{ ...studentPayload }}`;
+    return this.studentsService.createStudent(studentPayload)
+    //return `${request.method} from ${request.ip} data : ${{ ...studentPayload }}`;
   }
 
   @Patch('edit')

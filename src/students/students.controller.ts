@@ -9,10 +9,12 @@ import {
   Query,
   HttpException,
   HttpStatus,
+  UsePipes,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { StudentsService } from './students.service';
-
+import { Studentdto ,studentSchema } from './zodValidation/studentdto';
+import { booksValidationPipe } from './studentpipe';
 @Controller('student')
 export class StudentsController {
   constructor(private studentsService: StudentsService) {}
@@ -32,6 +34,7 @@ export class StudentsController {
   }
 
   @Post('create')
+  @UsePipes(new booksValidationPipe (studentSchema))
   createStudent(@Body() studentPayload: any, @Req() request: Request) {
     return this.studentsService.createStudent(studentPayload)
     //return `${request.method} from ${request.ip} data : ${{ ...studentPayload }}`;

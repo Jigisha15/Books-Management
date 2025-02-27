@@ -9,7 +9,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { BooksService } from 'src/books/books.service';
-import { booksValidationPipe } from './books.pipe';
+import { booksValidationPipe } from '../body-validation.pipe';
 import {
   TCreateBookDTO,
   createBookSchema,
@@ -35,13 +35,19 @@ export class BooksController {
     if (result.length != 0) {
       return result[0];
     } else {
-      throw new HttpException('No user found', HttpStatus.NOT_FOUND);
+      throw new HttpException('No book found', HttpStatus.NOT_FOUND);
     }
   }
 
   @Post('create')
   @UsePipes(new booksValidationPipe(createBookSchema))
-  createBook(@Body() bookPayload: TCreateBookDTO) {
-    return this.bookService.createBook(bookPayload);
+  async createBook(@Body() bookPayload: TCreateBookDTO) {
+    try {
+      return await this.bookService.createBook(bookPayload);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 }
